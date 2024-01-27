@@ -1,0 +1,79 @@
+//METHOD 1
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n=nums.length;
+        int maxnum = 0;
+        int maxcount = 0;
+        int half = 0;
+        if(n%2 == 0) half = n/2 +1;
+        else half = (int) Math.ceil(n / 2.0);
+
+        Arrays.sort(nums);
+
+        for(int i=0; i<n; i++){
+            if(nums[i] != maxnum){
+                maxnum = nums[i];
+                maxcount = 1;
+            }
+
+            else{
+                maxcount++;
+            }
+
+            if(maxcount>=half) break;
+        }
+        return maxnum;
+    }
+}
+
+//METHOD 2
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        Map<Integer,Integer> hs = new HashMap<>();
+        int n = nums.length;
+        int half = 0;
+        if(n%2 == 0) half = n/2 +1;
+        else half = (int) Math.ceil(n / 2.0);
+        int maxnum = 0;
+
+
+        for(int i=0 ; i<n ; i++){
+            if(hs.containsKey(nums[i])){
+                int count = hs.get(nums[i]);
+                int newcount = count+1;
+                hs.put(nums[i],newcount);
+                }
+
+            else hs.put(nums[i],1);
+
+            if(hs.get(nums[i]) >= half){
+                maxnum = nums[i];
+                break;
+            } 
+        }
+
+        return maxnum;
+    }
+}
+
+//METHOD 3
+//Moore voting algo (striver)
+
+class Solution {
+    public int majorityElement(int[] nums) {
+        int n = nums.length;
+
+        int el=nums[0];
+        int count = 1;
+
+        for(int i=1 ; i<n ; i++){
+            if (count == 0) el = nums[i];
+            if(el == nums[i]) count++;
+            else count--;
+        }
+
+        return el;
+    }
+}
